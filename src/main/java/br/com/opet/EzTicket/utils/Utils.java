@@ -1,4 +1,4 @@
-package br.com.opet.EzTicket.Utils;
+package br.com.opet.EzTicket.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

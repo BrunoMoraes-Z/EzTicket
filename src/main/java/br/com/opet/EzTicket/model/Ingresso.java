@@ -1,4 +1,4 @@
-package br.com.opet.EzTicket.Model;
+package br.com.opet.EzTicket.model;
 
 public class Ingresso {
 

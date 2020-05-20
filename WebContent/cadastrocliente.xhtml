@@ -9,18 +9,28 @@
 <h:head>
 </h:head>
 <body>
-	<b:form>
-		<div>
-			<b:inputText placeholder="Nome Completo" value="#{cliente.name}" label="Nome Completo"/>
-			<b:inputText placeholder="CPF" value="#{cliente.cpf}" label="CPF" />
-			<b:inputText placeholder="Endereço" value="#{cliente.endereco}" label="Endereço" />
-			<b:dateTimePicker format="DD/MM/YYYY" locale="en" value="#{cliente.dt_nascimento}" label="Data de Nascimento" />
-			<b:inputSecret placeholder="Senha" value="#{cliente.senha}" label="Senha" />
-			<b:selectOneMenu value="#{cliente.sexoId}" label="Sexo">
-				<f:selectItems value="${cliente.sexos}" var="s" itemLabel="${s.name}" itemValue="${s.id}"/>
-			</b:selectOneMenu>
-			<b:commandButton value="Salvar" action="${cliente.salvar()}"/>
-		</div>
-	</b:form>
+	<div id="navegation">
+		<b:button value="Voltar para Home" href="index.xhtml" />
+	</div>
+	<div id="root">
+		<b:form>
+			<div>
+				<b:inputText placeholder="Nome Completo" value="#{cliente.name}"
+					label="Nome Completo" />
+				<b:inputText placeholder="CPF" value="#{cliente.cpf}" label="CPF" />
+				<b:inputText placeholder="Endereço" value="#{cliente.endereco}"
+					label="Endereço" />
+				<b:dateTimePicker format="DD/MM/YYYY" locale="en"
+					value="#{cliente.dt_nascimento}" label="Data de Nascimento" />
+				<b:inputSecret placeholder="Senha" value="#{cliente.senha}"
+					label="Senha" />
+				<b:selectOneMenu value="#{cliente.sexoId}" label="Sexo">
+					<f:selectItems value="${cliente.sexos}" var="s"
+						itemLabel="${s.name}" itemValue="${s.id}" />
+				</b:selectOneMenu>
+				<b:commandButton value="Salvar" action="${cliente.salvar()}" />
+			</div>
+		</b:form>
+	</div>
 </body>
 </html>

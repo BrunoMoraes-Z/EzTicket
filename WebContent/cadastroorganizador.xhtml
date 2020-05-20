@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+</h:head>
+<body>
+	<div id="navegation">
+		<b:button value="Voltar para Home" href="index.xhtml" />
+	</div>
+	<div id="root">
+		<b:form>
+			<div>
+				<b:inputText placeholder="Nome da Organização completa"
+					value="#{organizador.name}" label="Nome da Organização completa" />
+				<b:inputText placeholder="CNPJ" value="#{organizador.cnpj}"
+					label="CNPJ" />
+				<b:inputText placeholder="Endereço" value="#{organizador.endereco}"
+					label="Endereço" />
+				<b:inputSecret placeholder="Senha" value="#{organizador.senha}"
+					label="Senha" />
+				<b:commandButton value="Salvar" action="${organizador.salvar()}" />
+			</div>
+		</b:form>
+	</div>
+</body>
+</html>

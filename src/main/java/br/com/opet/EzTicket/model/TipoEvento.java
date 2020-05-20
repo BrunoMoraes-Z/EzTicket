@@ -1,10 +1,10 @@
-package br.com.opet.EzTicket.Model;
+package br.com.opet.EzTicket.model;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import br.com.opet.EzTicket.Utils.Utils;
+import br.com.opet.EzTicket.utils.Utils;
 
 public enum TipoEvento {
 
@@ -30,7 +30,7 @@ public enum TipoEvento {
 		return Arrays.asList(this.desc);
 	}
 	
-	public static TipoEvento getSexoById(int id) {
+	public static TipoEvento getTipoEventoById(int id) {
 		Optional<TipoEvento> result = Arrays.asList(values()).stream().filter(s -> s.getId() == id).findFirst();
 		return result.isPresent() ? result.get() : OUTROS;
 	}

@@ -2,8 +2,8 @@ package br.com.opet.EzTicket;
 
 import java.util.Date;
 
-import br.com.opet.EzTicket.Model.Cliente;
-import br.com.opet.EzTicket.Model.Sexo;
+import br.com.opet.EzTicket.model.Cliente;
+import br.com.opet.EzTicket.model.Sexo;
 
 public class Main {
 

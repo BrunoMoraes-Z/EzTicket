@@ -1,10 +1,10 @@
-package br.com.opet.EzTicket.Model;
+package br.com.opet.EzTicket.model;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import br.com.opet.EzTicket.Utils.Utils;
+import br.com.opet.EzTicket.utils.Utils;
 
 public enum Classificacao {
 
@@ -42,7 +42,7 @@ public enum Classificacao {
 	}
 
 	public String getName() {
-		return Utils.capitalize(this.name().toLowerCase());
+		return Utils.capitalize(this.name().toLowerCase().replace("_", " "));
 	}
 
 	public List<String> getDescription() {

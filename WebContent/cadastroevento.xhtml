@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+</h:head>
+<body>
+	<div id="navegation">
+		<b:button value="Voltar para Home" href="index.xhtml" />
+	</div>
+	<div id="root">
+		<b:form>
+			<b:label value="ID Organizador: ${organizador.id}, Nome: ${organizador.name}" />
+			<b:inputText placeholder="Nome" value="#{evento.name}" label="Nome Do Evento" />
+			<b:inputText type="number" value="#{evento.max_pessoas}" label="Quantidade de Pessoas" />
+			<b:dateTimePicker format="DD/MM/YYYY" locale="en" value="#{evento.dt_evento}" label="Data de Nascimento" />
+			<b:selectOneMenu value="#{evento.id_tipo_evento}" label="Tipo de Evento">
+				<f:selectItems value="${evento.tiposEventos}" var="te"
+					itemLabel="${te.name}" itemValue="${te.id}" />
+			</b:selectOneMenu>
+			<b:selectOneMenu value="#{evento.id_tipo_classificacao}" label="Classificação Indicada">
+				<f:selectItems value="${evento.classificacoes}" var="c"
+					itemLabel="${c.name}" itemValue="${c.id}" />
+			</b:selectOneMenu>
+			<b:commandButton value="Salvar" action="${evento.salvar(organizador.id)}" />
+		</b:form>
+	</div>
+</body>
+</html>

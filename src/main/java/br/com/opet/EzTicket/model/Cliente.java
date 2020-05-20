@@ -1,4 +1,4 @@
-package br.com.opet.EzTicket.Model;
+package br.com.opet.EzTicket.model;
 
 import java.util.Date;
 import java.util.UUID;

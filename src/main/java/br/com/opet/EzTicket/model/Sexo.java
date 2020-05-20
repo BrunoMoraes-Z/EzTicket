@@ -1,11 +1,11 @@
-package br.com.opet.EzTicket.Model;
+package br.com.opet.EzTicket.model;
 
 import java.util.Arrays;
 import java.util.Optional;
 
 import javax.faces.bean.ManagedBean;
 
-import br.com.opet.EzTicket.Utils.Utils;
+import br.com.opet.EzTicket.utils.Utils;
 
 @ManagedBean
 public enum Sexo {
