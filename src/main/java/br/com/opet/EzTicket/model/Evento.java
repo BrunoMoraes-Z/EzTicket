@@ -120,6 +120,7 @@ public class Evento {
 	public String salvar(String id_organizador) {
 		this.id_organizador = id_organizador;
 		System.out.println(toString());
+		
 		return "index.xhtml";
 	}
 

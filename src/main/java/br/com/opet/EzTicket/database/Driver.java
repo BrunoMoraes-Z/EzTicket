@@ -7,24 +7,11 @@ import java.sql.SQLException;
 public class Driver {
 
 	private static String jdbc = "com.mysql.cj.jdbc.Driver";
-	private static String url = "jdbc:mysql://localhost:3306/test?useTimezone=true&serverTimezone=UTC";
+	private static String url = "jdbc:mysql://localhost:3306/test?useTimezone=true&serverTimezone=America/Sao_Paulo";
 	private static String user = "root";
 	private static String password = "";
 
-//    public Driver(String jdbc, String url, String user, String password) {
-//        this.jdbc = jdbc;
-//        this.url = url;
-//        this.user = user;
-//        this.password = password;
-//        try {
-//            Class.forName(this.jdbc);
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
 	static {
-//    	"com.mysql.cj.jdbc.Driver", "jdbc:mysql://localhost:3306/test?useTimezone=true&serverTimezone=UTC", "root", ""
 		try {
 			Class.forName(jdbc);
 		} catch (ClassNotFoundException e) {

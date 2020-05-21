@@ -7,49 +7,50 @@
 	xmlns:b="http://bootsfaces.net/ui">
 
 <h:head>
+	${clienteController.loadCliente(param['client_id'])}
 </h:head>
 <body>
 	<div id="navegation">
 		<b:button value="Voltar para Home" href="index.xhtml" />
 	</div>
-	<br/>
+	<br />
 	<div id="root">
 		<b:form inline="true">
 			<h:panelGrid columns="1">
 				<div>
 					<b:label value="Nome Completo" />
-					<b:inputText placeholder="Nome Completo" value="#{cliente.name}" />
+					<b:inputText placeholder="Nome Completo" value="#{clienteController.cliente.name}" />
 				</div>
 				<div>
 					<b:label value="CPF" />
-					<b:inputText placeholder="CPF" value="#{cliente.cpf}" mask="###.###.###-##" />
+					<b:inputText placeholder="CPF" value="${clienteController.cliente.cpf}" disabled="true" mask="###.###.###-##" />
 				</div>
 				<div>
 					<b:label value="Endereço" />
-					<b:inputText placeholder="Endereço" value="#{cliente.endereco}" />
+					<b:inputText placeholder="Endereço" value="#{clienteController.cliente.endereco}" />
 				</div>
 				<div>
 					<b:label value="Data de Nascimento" />
-					<b:dateTimePicker format="DD/MM/YYYY" locale="en" mask="DD/MM/YYYY"
-						value="#{cliente.dt_nascimento}" render-label="true" />
+					<b:dateTimePicker format="DD/MM/YYYY" locale="en" mask="DD/MM/YYYY" disabled="true"
+						value="${clienteController.cliente.dt_nascimento}" render-label="true" />
 				</div>
 				<div>
 					<b:label value="Senha" />
-					<b:inputSecret placeholder="Senha" value="#{cliente.senha}" />
+					<b:inputSecret placeholder="Senha" value="#{clienteController.cliente.senha}" />
 				</div>
 				<div>
 					<b:label value="Sexo" />
-					<b:selectOneMenu value="#{cliente.sexoId}">
-						<f:selectItems value="${cliente.sexos}" var="s"
+					<b:selectOneMenu value="#{clienteController.cliente.sexoId}">
+						<f:selectItems value="#{clienteController.cliente.sexos}" var="s"
 							itemLabel="${s.name}" itemValue="${s.id}" />
 					</b:selectOneMenu>
 				</div>
 				<div>
 					<b:label value="E-mail" />
 					<b:inputText placeholder="E-mail" mask="email"
-					value="#{cliente.email}" render-label="true" />
+					value="#{clienteController.cliente.email}" render-label="true" />
 				</div>
-				<b:commandButton value="Salvar" action="${cliente.salvar()}" />
+				<b:commandButton value="Salvar" action="#{clienteController.cliente.update()}" />
 			</h:panelGrid>
 		</b:form>
 	</div>

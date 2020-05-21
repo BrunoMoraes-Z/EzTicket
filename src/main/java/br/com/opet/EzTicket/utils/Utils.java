@@ -1,7 +1,10 @@
 package br.com.opet.EzTicket.utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.swing.text.MaskFormatter;
 
 public class Utils {
 
@@ -36,4 +39,14 @@ public class Utils {
 		return new String(newCodePoints, 0, outOffset);
 	}
 
+	public static String formatter(String input, String pattern) {
+		MaskFormatter mask;
+		try {
+			mask = new MaskFormatter(pattern);
+			mask.setValueContainsLiteralCharacters(false);
+			return mask.valueToString(input);
+		} catch (ParseException e) {}
+		return input;
+	}
+	
 }

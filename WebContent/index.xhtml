@@ -8,13 +8,27 @@
 
 <h:head>
 </h:head>
-<body>
-	<b:form>
-		<div>
-			<b:label value="Cadastro" />
-			<b:commandButton value="Cliente" action="cadastrocliente.xhtml "/>
-			<b:commandButton value="Organizador" action="cadastroorganizador.xhtml" />
+<body >
+	<div style="display: flex; align-items: center;">
+		<div id="cadastro">
+			<b:form inline="true">
+				<h:panelGrid columns="1">
+					<b:label value="Cadastro" />
+					<b:commandButton value="Cliente" action="cadastrocliente.xhtml " />
+					<b:commandButton value="Organizador"
+						action="cadastroorganizador.xhtml" />
+				</h:panelGrid>
+			</b:form>
 		</div>
-	</b:form>
+		<br />
+		<div id="consulta" style="">
+			<b:form inline="true">
+				<h:panelGrid columns="1">
+					<b:label value="Consulta" />
+					<b:commandButton value="Cliente" action="consultacliente.xhtml " />
+				</h:panelGrid>
+			</b:form>
+		</div>
+	</div>
 </body>
 </html>
