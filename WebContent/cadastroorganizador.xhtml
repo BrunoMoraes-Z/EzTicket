@@ -7,6 +7,7 @@
 	xmlns:b="http://bootsfaces.net/ui">
 
 <h:head>
+	<title>Cadastro Organizador</title>
 </h:head>
 <body>
 	<div id="navegation">
@@ -22,7 +23,7 @@
 				</div>
 				<div>
 					<b:label value="CNPJ" />
-					<b:inputText placeholder="CNPJ" value="#{organizador.cnpj}" />
+					<b:inputText placeholder="CNPJ" value="#{organizador.cnpj}" mask="##.###.###/####-##" />
 				</div>
 				<div>
 					<b:label value="Endereço" />
@@ -30,7 +31,7 @@
 				</div>
 				<div>
 					<b:label value="Senha" />
-					<b:inputText placeholder="Senha" value="#{organizador.senha}" />
+					<b:inputSecret placeholder="Senha" value="#{organizador.senha}" />
 				</div>
 				<div>
 					<b:label value="E-Mail" />

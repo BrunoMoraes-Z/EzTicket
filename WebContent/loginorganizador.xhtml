@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+	<title>EzTicket - Autenticação</title>
+</h:head>
+<body>
+	<div id="navegation">
+		<b:button value="Voltar para Home" href="index.xhtml" />
+	</div>
+	<br />
+	<div id="title">
+		<h:outputText value="Login Organizador" />
+	</div>
+	<br/>
+	<div style="max-width: 500px;">
+		<div id="login">
+			<b:form horizontal="true" id="teste">
+				<b:inputText placeholder="e-mail" required="true" label="E-mail"
+					colMd="10" labelColMd="2" value="#{login.email}">
+					<f:facet name="prepend">
+						🔒
+					</f:facet>
+				</b:inputText>
+				<b:inputSecret placeholder="Senha" required="true" label="Senha"
+					colMd="10" labelColMd="2" value="#{login.senha}">
+					<f:facet name="prepend">
+						🔑
+					</f:facet>
+				</b:inputSecret>
+				<b:commandButton value="Logar" action="${login.autenticar('org')}" />
+			</b:form>
+		</div>
+		<br />
+	</div>
+</body>
+</html>

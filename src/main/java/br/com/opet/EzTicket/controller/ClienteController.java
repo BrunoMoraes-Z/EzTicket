@@ -62,7 +62,8 @@ public class ClienteController {
 					String nm_email = result.getString("nm_email");
 					Sexo sexo = Sexo.getSexoById(result.getInt("id_sexo"));
 					String senha = result.getString("senha");
-					setCliente(new Cliente(id, name, dt_nascimento, nr_cpf, endereco, nm_email, sexo, senha));
+					Cliente c = new Cliente(id, name, dt_nascimento, nr_cpf, endereco, nm_email, sexo, senha);
+					setCliente(c);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();

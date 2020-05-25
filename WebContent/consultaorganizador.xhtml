@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+	<title>Consulta Organizador</title>
+</h:head>
+<body>
+	<div id="navegation">
+		<b:button value="Voltar para Home" href="index.xhtml" />
+	</div>
+	<br />
+	<div id="title">
+		<h:outputText value="Consulta de Organizações" />
+	</div>
+	<br/>
+	<div id="root">
+		<b:form inline="true">
+			<b:dataTable value="${organizadorController.getOrganizadores()}" var="organizador">
+				<b:dataTableColumn value="${organizador.name}" label="Nome 📄" />
+				<b:dataTableColumn value="${organizador.getFormatedCNPJ()}" label="CNPJ 🎟" />
+				<b:dataTableColumn value="${organizador.eventos.size()}"
+					label="Quantidade de Eventos 📅" />
+				<b:dataTableColumn value="${organizador.email}" label="E-Mail ✉" />
+				<b:dataTableColumn value="${organizador.endereco}" label="Endereço 🗺" />
+				<b:dataTableColumn label="Opções 📝">
+					<b:commandButton value="🗑" action="${organizadorController.removeOrganizador(organizador.id)}" />
+					<b:commandButton value="✍" action="${organizadorController.editOrganizador(organizador.id)}"/>
+				</b:dataTableColumn>
+			</b:dataTable>
+		</b:form>
+	</div>
+</body>
+</html>

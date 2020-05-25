@@ -7,12 +7,17 @@
 	xmlns:b="http://bootsfaces.net/ui">
 
 <h:head>
+	<title>Consulta Cliente</title>
 </h:head>
 <body>
 	<div id="navegation">
 		<b:button value="Voltar para Home" href="index.xhtml" />
 	</div>
 	<br />
+	<div id="title">
+		<h:outputText value="Consulta de Clientes" />
+	</div>
+	<br/>
 	<div id="root">
 		<b:form inline="true">
 			<b:dataTable value="${clienteController.getClientes()}" var="cliente">

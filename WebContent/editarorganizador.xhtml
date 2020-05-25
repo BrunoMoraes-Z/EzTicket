@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+	<title>Editar Organizador</title>
+	${organizadorController.loadOrganizador(param['org_id'])}
+</h:head>
+<body>
+	<div id="navegation">
+		<b:button value="Voltar para Home" href="index.xhtml" />
+	</div>
+	<br />
+	<div id="root">
+		<b:form inline="true">
+			<h:panelGrid columns="1">
+				<div>
+					<b:label value="Nome da Organização completa" />
+					<b:inputText placeholder="Nome" value="#{organizadorController.organizador.name}"  />
+				</div>
+				<div>
+					<b:label value="CNPJ" />
+					<b:inputText placeholder="CNPJ" value="${organizadorController.organizador.cnpj}" mask="##.###.###/####-##" disabled="true" />
+				</div>
+				<div>
+					<b:label value="Endereço" />
+					<b:inputText placeholder="Endereço" value="#{organizadorController.organizador.endereco}" />
+				</div>
+				<div>
+					<b:label value="Senha" />
+					<b:inputSecret placeholder="Senha" value="#{organizadorController.organizador.senha}" />
+				</div>
+				<div>
+					<b:label value="E-Mail" />
+					<b:inputText placeholder="E-mail" mask="email" value="#{organizadorController.organizador.email}" render-label="true" />
+				</div>
+				<b:commandButton value="Salvar" action="${organizadorController.organizador.update()}" />
+			</h:panelGrid>
+		</b:form>
+	</div>
+</body>
+</html>

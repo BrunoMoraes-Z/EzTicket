@@ -6,10 +6,17 @@ import java.sql.SQLException;
 
 public class Driver {
 
-	private static String jdbc = "com.mysql.cj.jdbc.Driver";
-	private static String url = "jdbc:mysql://localhost:3306/test?useTimezone=true&serverTimezone=America/Sao_Paulo";
-	private static String user = "root";
-	private static String password = "";
+	// MySQL
+//	private static String jdbc = "com.mysql.cj.jdbc.Driver";
+//	private static String url = "jdbc:mysql://localhost:3306/test?useTimezone=true&serverTimezone=America/Sao_Paulo";
+//	private static String user = "root";
+//	private static String password = "";
+	
+	// Oracle
+	private static String jdbc = "oracle.jdbc.driver.OracleDriver";
+	private static String url = "jdbc:oracle:thin:@//localhost:1521/XE";
+	private static String user = "zeuss";
+	private static String password = "zeuss";
 
 	static {
 		try {
