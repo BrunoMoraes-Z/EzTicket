@@ -144,7 +144,10 @@ public class Organizador {
 			e.printStackTrace();
 		}
 		connection.close(null);
-		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		} catch (Exception e) {
+		}
 		return "index.xhtml";
 	}
 
