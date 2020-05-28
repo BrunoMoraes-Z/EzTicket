@@ -9,16 +9,16 @@ import org.json.JSONObject;
 import br.com.opet.EzTicket.model.Cliente;
 import br.com.opet.EzTicket.model.Organizador;
 import br.com.opet.EzTicket.model.Sexo;
-import br.com.opet.EzTicket.utils.Method;
-import br.com.opet.EzTicket.utils.Property;
-import br.com.opet.EzTicket.utils.RestAPI;
 import br.com.opet.EzTicket.utils.Utils;
+import br.com.opet.EzTicket.utils.restful.Method;
+import br.com.opet.EzTicket.utils.restful.Property;
+import br.com.opet.EzTicket.utils.restful.RestAPI;
 
 public class Main {
 
     public static void main(String[] args) {
-//    	geradorCliente(100);
-//    	geradorOrganizador(50);
+//    	geradorCliente(1100);
+//    	geradorOrganizador(71);
     }
 
     private static void geradorOrganizador(int amount) {
@@ -36,7 +36,7 @@ public class Main {
         	String endereco = pessoa.getString("endereco") + ", " + pessoa.getInt("numero") + ", " + pessoa.getString("bairro");
         	String email = cpf + "@gmail.com";
         	String senha = pessoa.getString("senha");
-        	Organizador o = new Organizador(id, nome, endereco, cpf + "798", senha, email, "");
+        	Organizador o = new Organizador(id, nome, endereco, cpf + "798", senha, email);
         	System.out.println(i + " - " + o.getName());
         	o.salvar();
     	}

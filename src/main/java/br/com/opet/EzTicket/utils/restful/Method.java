@@ -1,4 +1,4 @@
-package br.com.opet.EzTicket.utils;
+package br.com.opet.EzTicket.utils.restful;
 
 public enum Method {
 

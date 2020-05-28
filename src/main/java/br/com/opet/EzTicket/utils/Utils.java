@@ -4,12 +4,18 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.faces.context.FacesContext;
 import javax.swing.text.MaskFormatter;
 
 public class Utils {
 
+	@SuppressWarnings("deprecation")
 	public static Date getDateFromString(String input) {
 		try {
+			if (input != null && input.equalsIgnoreCase("today")) {
+				Date date = new Date();
+				input = date.getDay() + "/" + date.getMonth() + "/" + date.getYear();
+			}
 			return new SimpleDateFormat("dd/MM/yyyy").parse(input);
 		} catch (Exception e) {}
 		return null;
@@ -47,6 +53,12 @@ public class Utils {
 			return mask.valueToString(input);
 		} catch (ParseException e) {}
 		return input;
+	}
+	
+	public static void deleteSession() {
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		} catch (Exception e) {}
 	}
 	
 }

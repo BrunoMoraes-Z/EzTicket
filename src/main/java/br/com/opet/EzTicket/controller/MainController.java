@@ -7,13 +7,13 @@ import java.util.Date;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 
 import br.com.opet.EzTicket.database.Driver;
 import br.com.opet.EzTicket.database.DriverConnection;
 import br.com.opet.EzTicket.model.Cliente;
 import br.com.opet.EzTicket.model.Organizador;
 import br.com.opet.EzTicket.model.Sexo;
+import br.com.opet.EzTicket.utils.Utils;
 
 @ManagedBean
 @SessionScoped
@@ -46,7 +46,7 @@ public class MainController {
 					e.printStackTrace();
 				}
 			} else {
-				DriverConnection connection = Driver.getStatement("select nm_organizador, endereco, cnpj, eventos, nm_email, senha from organizador where id_organizador = ?");
+				DriverConnection connection = Driver.getStatement("select nm_organizador, endereco, cnpj, nm_email, senha from organizador where id_organizador = ?");
 				ResultSet result = null;
 				try {
 					PreparedStatement stm = connection.getStatement();
@@ -56,10 +56,9 @@ public class MainController {
 						String name = result.getString("nm_organizador");
 						String endereco = result.getString("endereco");
 						String cnpj = result.getString("cnpj");
-						String eventos = result.getString("eventos");
 						String email = result.getString("nm_email");
 						String senha = result.getString("senha");
-						Organizador o = new Organizador(id, name, endereco, cnpj, senha, email, eventos);
+						Organizador o = new Organizador(id, name, endereco, cnpj, senha, email);
 						setOrganizador(o);
 					}
 				} catch (SQLException e) {
@@ -70,7 +69,7 @@ public class MainController {
 	}
 	
 	public String logout() {
-		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		Utils.deleteSession();
 		return "index.xhtml";
 	}
 	

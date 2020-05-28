@@ -136,7 +136,6 @@ public class Cliente {
 	}
 	
 	public String salvar() {
-		System.out.println(this);
 		DriverConnection connection = Driver.getStatement("insert into cliente (id_cliente, nm_cliente, dt_nascimento, nr_cpf, endereco, nm_email, id_sexo, senha) values (?, ?, ?, ?, ?, ?, ?, ?)");
 		PreparedStatement stm = connection.getStatement();
 		try {

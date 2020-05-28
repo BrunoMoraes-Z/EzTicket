@@ -14,21 +14,42 @@
 		<b:button value="Voltar para Home" href="index.xhtml" />
 	</div>
 	<div id="root">
-		<b:form>
-			<b:label value="ID Organizador: ${organizador.id}, Nome: ${organizador.name}" />
-			<b:inputText placeholder="Nome" value="#{evento.name}" label="Nome Do Evento" />
-			<b:inputText type="number" value="#{evento.max_pessoas}" label="Quantidade de Pessoas" />
-			<b:dateTimePicker format="DD/MM/YYYY" locale="en" value="#{evento.dt_evento}" label="Data de Nascimento" />
-			<b:selectOneMenu value="#{evento.id_tipo_evento}" label="Tipo de Evento">
-				<f:selectItems value="${evento.tiposEventos}" var="te"
-					itemLabel="${te.name}" itemValue="${te.id}" />
-			</b:selectOneMenu>
-			<b:selectOneMenu value="#{evento.id_tipo_classificacao}" label="Classificação Indicada">
-				<f:selectItems value="${evento.classificacoes}" var="c"
-					itemLabel="${c.name}" itemValue="${c.id}" />
-			</b:selectOneMenu>
-			<b:commandButton value="Salvar" action="${evento.salvar(organizador.id)}" />
-		</b:form>
+		<h:panelGroup rendered="#{mainController.organizador.id == null}">
+			<div id="cadastro" style="display: flex; align-items: right;">
+				<b:form>
+					<h:outputText
+						value="Você deve estar logado para poder cadastrar um Evento." />
+					<br />
+					<b:commandButton value="Efetuar Login"
+						action="loginorganizador.xhtml" />
+				</b:form>
+			</div>
+		</h:panelGroup>
+
+		<h:panelGroup rendered="#{mainController.organizador.id != null}">
+			<div id="cadastro" style="display: flex; align-items: right;">
+				<b:form>
+					<b:inputText placeholder="Nome" value="#{evento.name}"
+						label="Nome Do Evento" />
+					<b:inputText type="number" value="#{evento.max_pessoas}"
+						label="Quantidade de Pessoas" />
+					<b:dateTimePicker format="DD/MM/YYYY" locale="en"
+						value="#{evento.dt_evento}" label="Data do Evento" />
+					<b:selectOneMenu value="#{evento.id_tipo_evento}"
+						label="Tipo de Evento">
+						<f:selectItems value="${evento.tiposEventos}" var="te"
+							itemLabel="${te.name}" itemValue="${te.id}" />
+					</b:selectOneMenu>
+					<b:selectOneMenu value="#{evento.id_tipo_classificacao}"
+						label="Classificação Indicada">
+						<f:selectItems value="${evento.classificacoes}" var="c"
+							itemLabel="${c.name}" itemValue="${c.id}" />
+					</b:selectOneMenu>
+					<b:commandButton value="Salvar"
+						action="${evento.salvar(mainController.organizador.id)}" />
+				</b:form>
+			</div>
+		</h:panelGroup>
 	</div>
 </body>
 </html>

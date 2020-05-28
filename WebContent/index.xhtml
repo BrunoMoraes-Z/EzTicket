@@ -35,9 +35,9 @@
 		</div>
 	</div>
 	<div>
-		<div id="login" style="display: flex; align-items: right;">
-			<h:panelGroup
-				rendered="#{mainController.cliente == null and mainController.organizador == null}">
+		<h:panelGroup
+			rendered="#{mainController.cliente == null and mainController.organizador == null}">
+			<div id="login" style="display: flex; align-items: right;">
 				<b:form inline="true">
 					<h:panelGrid columns="1">
 						<b:label value="Login" />
@@ -47,8 +47,9 @@
 							action="loginorganizador.xhtml " />
 					</h:panelGrid>
 				</b:form>
-			</h:panelGroup>
-		</div>
+			</div>
+		</h:panelGroup>
+
 		<div>
 			<h:panelGroup rendered="#{mainController.cliente != null}">
 				<div id="organizador" style="display: flex; align-items: center;">
@@ -56,13 +57,14 @@
 						<h:panelGrid columns="1">
 							<b:label value="Eventos" />
 							<b:commandButton value="Todos os Eventos"
-								action="todoseventos.xhtml " />
+								action="consultaeventos.xhtml " />
 							<b:commandButton value="Meus Eventos - W.I.P"
 								action="consultaeventosorg.xhtml " />
 						</h:panelGrid>
 					</b:form>
 				</div>
 			</h:panelGroup>
+
 			<h:panelGroup rendered="#{mainController.organizador != null}">
 				<div id="organizador" style="display: flex; align-items: center;">
 					<b:form inline="true">
@@ -77,9 +79,10 @@
 				</div>
 			</h:panelGroup>
 		</div>
-		<div id="logout" style="display: flex; align-items: right;">
-			<h:panelGroup
-				rendered="#{mainController.cliente != null or mainController.organizador != null}">
+
+		<h:panelGroup
+			rendered="#{mainController.cliente != null or mainController.organizador != null}">
+			<div id="logout" style="display: flex; align-items: right;">
 				<b:form inline="true">
 					<h:panelGrid columns="1">
 						<b:label value="Login" />
@@ -87,8 +90,9 @@
 							action="${mainController.logout()}" />
 					</h:panelGrid>
 				</b:form>
-			</h:panelGroup>
-		</div>
+			</div>
+		</h:panelGroup>
+
 	</div>
 </body>
 </html>

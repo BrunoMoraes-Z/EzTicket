@@ -1,4 +1,4 @@
-package br.com.opet.EzTicket.utils;
+package br.com.opet.EzTicket.utils.restful;
 
 import java.io.*;
 import java.net.HttpURLConnection;

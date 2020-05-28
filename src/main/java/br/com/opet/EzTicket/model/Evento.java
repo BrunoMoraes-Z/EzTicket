@@ -1,16 +1,23 @@
 package br.com.opet.EzTicket.model;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.UUID;
 
 import javax.faces.bean.ManagedBean;
 
+import br.com.opet.EzTicket.database.Driver;
+import br.com.opet.EzTicket.database.DriverConnection;
+import br.com.opet.EzTicket.utils.Utils;
+
 @ManagedBean
 public class Evento {
 
-	private String id, id_organizador, name;
+	private String id, idOrganizador, name;
 	private Date dt_evento;
-	private int max_pessoas;
+	private int max_pessoas = 100;
 	private int id_tipo_evento, id_tipo_classificacao;
 	private TipoEvento tipoEvento;
 	private Classificacao classificacao;
@@ -19,9 +26,9 @@ public class Evento {
 		this.id = UUID.randomUUID().toString();
 	}
 	
-	public Evento(String id_organizador, String name, Date dt_evento, int max_pessoas, TipoEvento tipoEvento, Classificacao classificacao) {
+	public Evento(String idOrganizador, String name, Date dt_evento, int max_pessoas, TipoEvento tipoEvento, Classificacao classificacao) {
 		this.id = UUID.randomUUID().toString();
-		this.id_organizador = id_organizador;
+		this.idOrganizador = idOrganizador;
 		this.name = name;
 		this.dt_evento = dt_evento;
 		this.max_pessoas = max_pessoas;
@@ -29,9 +36,9 @@ public class Evento {
 		this.classificacao = classificacao;
 	}
 	
-	public Evento(String id, String id_organizador, String name, Date dt_evento, int max_pessoas, TipoEvento tipoEvento, Classificacao classificacao) {
+	public Evento(String id, String idOrganizador, String name, Date dt_evento, int max_pessoas, TipoEvento tipoEvento, Classificacao classificacao) {
 		this.id = id;
-		this.id_organizador = id_organizador;
+		this.idOrganizador = idOrganizador;
 		this.name = name;
 		this.dt_evento = dt_evento;
 		this.max_pessoas = max_pessoas;
@@ -39,12 +46,8 @@ public class Evento {
 		this.classificacao = classificacao;
 	}
 
-	public String getId_organizador() {
-		return id_organizador;
-	}
-
-	public void setId_organizador(String id_organizador) {
-		this.id_organizador = id_organizador;
+	public String getidOrganizador() {
+		return idOrganizador;
 	}
 
 	public String getName() {
@@ -116,17 +119,50 @@ public class Evento {
 		this.id_tipo_classificacao = id_tipo_classificacao;
 		this.classificacao = Classificacao.getClassificacaoById(id_tipo_classificacao);
 	}
+
+	public String getOwnerName() {
+		DriverConnection con = Driver.getStatement("select nm_organizador from organizador where id_organizador = ?");
+		PreparedStatement stm = con.getStatement();
+		ResultSet result = null;
+		try {
+			stm.setString(1, this.idOrganizador);
+			result = stm.executeQuery();
+			while (result.next()) {
+				return Utils.capitalize(result.getString("nm_organizador"));
+			}
+		} catch (SQLException e) {
+			return null;
+		}
+		return null;
+	}
 	
-	public String salvar(String id_organizador) {
-		this.id_organizador = id_organizador;
-		System.out.println(toString());
-		
+	public String salvar(String idOrganizador) {
+		this.idOrganizador = idOrganizador;
+		DriverConnection con = Driver.getStatement("insert into evento (id_evento, id_organizador, nm_evento, dt_evento, max_pessoas, id_tipo_evento, id_classificacao) values (?,?,?,?,?,?,?)");
+		PreparedStatement stm = con.getStatement();
+		try {
+			stm.setString(1, this.id);
+			stm.setString(2, this.idOrganizador);
+			stm.setString(3, this.name);
+			stm.setDate(4, new java.sql.Date(this.dt_evento.getTime()));
+			stm.setInt(5, this.max_pessoas);
+			stm.setInt(6, this.tipoEvento.getId());
+			stm.setInt(7, this.classificacao.getId());
+			int rolls = stm.executeUpdate();
+			if (rolls != 1) {
+				con.roolback();
+			}
+			con.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		con.close(null);
 		return "index.xhtml";
 	}
 
 	@Override
 	public String toString() {
-		return "Evento [id=" + id + ", id_organizador=" + id_organizador + ", name=" + name + ", dt_evento=" + dt_evento
+		return "Evento [id=" + id + ", idOrganizador=" + idOrganizador + ", name=" + name + ", dt_evento=" + dt_evento
 				+ ", max_pessoas=" + max_pessoas + ", tipoEvento=" + tipoEvento + ", classificacao=" + classificacao + "]";
 	}
 	
