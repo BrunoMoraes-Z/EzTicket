@@ -1,15 +1,12 @@
 package br.com.opet.EzTicket.model;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
 import javax.faces.bean.ManagedBean;
 
-import br.com.opet.EzTicket.database.Driver;
-import br.com.opet.EzTicket.database.DriverConnection;
+import br.com.opet.EzTicket.model.dao.ClienteDao;
 import br.com.opet.EzTicket.utils.Utils;
 
 @ManagedBean
@@ -35,9 +32,13 @@ public class Cliente {
 		this.senha = senha;
 		this.sexoId = sexo.getId();
 	}
+	
+	public boolean isAdmin() {
+		return this.name.toLowerCase().contains(" adm");
+	}
 
 	public String getName() {
-		return name;
+		return name != null ? name.contains(" adm") ? new String(name).replace(" adm", "") : name : null;
 	}
 
 	public void setName(String name) {
@@ -114,58 +115,43 @@ public class Cliente {
 	}
 	
 	public String update() {
-		DriverConnection connection = Driver.getStatement("update cliente set nm_cliente = ?, endereco = ?, nm_email = ?, id_sexo = ?, senha = ? where id_cliente = ?");
-		PreparedStatement stm = connection.getStatement();
-		try {
-			stm.setString(1, this.name);
-			stm.setString(2, this.endereco);
-			stm.setString(3, this.email);
-			stm.setInt(4, this.sexo.getId());
-			stm.setString(5, this.senha);
-			stm.setString(6, this.id);
-			int rolls = stm.executeUpdate();
-			if (rolls != 1) {
-				connection.roolback();
-			}
-			connection.commit();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		connection.close(null);
+		new ClienteDao().update(this);
 		return "index.xhtml";
 	}
 	
 	public String salvar() {
-		DriverConnection connection = Driver.getStatement("insert into cliente (id_cliente, nm_cliente, dt_nascimento, nr_cpf, endereco, nm_email, id_sexo, senha) values (?, ?, ?, ?, ?, ?, ?, ?)");
-		PreparedStatement stm = connection.getStatement();
-		try {
-			stm.setString(1, this.id);
-			stm.setString(2, this.name);
-			stm.setDate(3,  new java.sql.Date(this.dt_nascimento.getTime()));
-			stm.setString(4, this.cpf);
-			stm.setString(5, this.endereco);
-			stm.setString(6, this.email);
-			stm.setInt(7, this.sexo.getId());
-			stm.setString(8, this.senha);
-			int rolls = stm.executeUpdate();
-			if (rolls != 1) {
-				connection.roolback();
-			}
-			connection.commit();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		connection.close(null);
+		new ClienteDao().save(this);
 		return "index.xhtml";
+	}
+	
+	public String delete() {
+		new ClienteDao().delete(this);
+		return "consultacliente.xhtml";
+	}
+	
+	public boolean hasEvent(Evento evento) {
+		
+		return false;
+	}
+	
+	public String addEvent(Evento evento) {
+		if (evento.hasSlot()) {
+			evento.updateSlot();
+			new Ingresso(UUID.randomUUID().toString(), evento.getCurrent() - 1, evento, this).save();
+		}
+		return "consultaeventos.xhtml";
 	}
 	
 	public Sexo[] getSexos() {
 		return Sexo.values();
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Cliente [id=" + id + ", name=" + name + ", cpf=" + cpf + ", endereco=" + endereco + ", senha=" + senha
-				+ ", dt_nascimento=" + dt_nascimento + ", sexo=" + sexo + ", sexoID=" + sexoId + "]";
+				+ ", email=" + email + ", dt_nascimento=" + dt_nascimento + ", sexoId=" + sexoId + ", sexo=" + sexo
+				+ "]";
 	}
+	
+	
 }

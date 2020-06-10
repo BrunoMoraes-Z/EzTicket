@@ -8,31 +8,37 @@
 
 <h:head>
 	<title>EzTicket</title>
-	${mainController.load(param['client_id'] != null ? param['client_id'] : param['org_id'] != null ? param['org_id'] : "", param['type'])}
+	${mainController.load(param['client_id'] != null ? param['client_id'] : param['org_id'] != null ? param['org_id'] : null, param['type'] != null ? param['type'] : null)}
 </h:head>
 <body>
 	<div style="display: flex; align-items: center;">
-		<div id="cadastro">
-			<b:form inline="true">
-				<h:panelGrid columns="1">
-					<b:label value="Cadastro" />
-					<b:commandButton value="Cliente" action="cadastrocliente.xhtml " />
-					<b:commandButton value="Organizador"
-						action="cadastroorganizador.xhtml" />
-				</h:panelGrid>
-			</b:form>
-		</div>
-		<br />
-		<div id="consulta" style="">
-			<b:form inline="true">
-				<h:panelGrid columns="1">
-					<b:label value="Consulta" />
-					<b:commandButton value="Cliente" action="consultacliente.xhtml " />
-					<b:commandButton value="Organizador"
-						action="consultaorganizador.xhtml " />
-				</h:panelGrid>
-			</b:form>
-		</div>
+		<h:panelGroup
+			rendered="#{mainController.cliente == null and mainController.organizador == null}">
+			<div id="cadastro">
+				<b:form inline="true">
+					<h:panelGrid columns="1">
+						<b:label value="Cadastro" />
+						<b:commandButton value="Cliente" action="cadastrocliente.xhtml " />
+						<b:commandButton value="Organizador"
+							action="cadastroorganizador.xhtml" />
+					</h:panelGrid>
+				</b:form>
+			</div>
+			<br />
+		</h:panelGroup>
+		<h:panelGroup
+			rendered="#{mainController.cliente != null and mainController.cliente.isAdmin()}">
+			<div id="consulta" style="">
+				<b:form inline="true">
+					<h:panelGrid columns="1">
+						<b:label value="Consulta" />
+						<b:commandButton value="Cliente" action="consultacliente.xhtml " />
+						<b:commandButton value="Organizador"
+							action="consultaorganizador.xhtml " />
+					</h:panelGrid>
+				</b:form>
+			</div>
+		</h:panelGroup>
 	</div>
 	<div>
 		<h:panelGroup
@@ -58,8 +64,7 @@
 							<b:label value="Eventos" />
 							<b:commandButton value="Todos os Eventos"
 								action="consultaeventos.xhtml " />
-							<b:commandButton value="Meus Eventos - W.I.P"
-								action="consultaeventosorg.xhtml " />
+							<b:commandButton value="Meus Eventos - W.I.P" action="a " />
 						</h:panelGrid>
 					</b:form>
 				</div>
@@ -73,7 +78,7 @@
 							<b:commandButton value="Novo Evento"
 								action="cadastroevento.xhtml " />
 							<b:commandButton value="Eventos"
-								action="consultaeventosorg.xhtml " />
+								action="consultaeventosorg.xhtml" />
 						</h:panelGrid>
 					</b:form>
 				</div>

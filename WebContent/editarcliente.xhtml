@@ -16,44 +16,70 @@
 	</div>
 	<br />
 	<div id="root">
-		<b:form inline="true">
-			<h:panelGrid columns="1">
-				<div>
-					<b:label value="Nome Completo" />
-					<b:inputText placeholder="Nome Completo" value="#{clienteController.cliente.name}" />
-				</div>
-				<div>
-					<b:label value="CPF" />
-					<b:inputText placeholder="CPF" value="${clienteController.cliente.cpf}" disabled="true" mask="###.###.###-##" />
-				</div>
-				<div>
-					<b:label value="Endereço" />
-					<b:inputText placeholder="Endereço" value="#{clienteController.cliente.endereco}" />
-				</div>
-				<div>
-					<b:label value="Data de Nascimento" />
-					<b:dateTimePicker format="DD/MM/YYYY" locale="en" mask="DD/MM/YYYY" disabled="true"
-						value="${clienteController.cliente.dt_nascimento}" render-label="true" />
-				</div>
-				<div>
-					<b:label value="Senha" />
-					<b:inputSecret placeholder="Senha" value="#{clienteController.cliente.senha}" />
-				</div>
-				<div>
-					<b:label value="Sexo" />
-					<b:selectOneMenu value="#{clienteController.cliente.sexoId}">
-						<f:selectItems value="#{clienteController.cliente.sexos}" var="s"
-							itemLabel="${s.name}" itemValue="${s.id}" />
-					</b:selectOneMenu>
-				</div>
-				<div>
-					<b:label value="E-mail" />
-					<b:inputText placeholder="E-mail" mask="email"
-					value="#{clienteController.cliente.email}" render-label="true" />
-				</div>
-				<b:commandButton value="Salvar" action="#{clienteController.cliente.update()}" />
-			</h:panelGrid>
-		</b:form>
+		<h:panelGroup rendered="#{mainController.cliente == null}">
+			<div id="cadastro" style="display: flex; align-items: right;">
+				<b:form>
+					<h:outputText
+						value="Você deve estar logado para consultar os clientes." />
+					<br />
+					<b:commandButton value="Efetuar Login" action="logincliente.xhtml" />
+				</b:form>
+			</div>
+		</h:panelGroup>
+		<h:panelGroup
+			rendered="#{mainController.cliente != null and !mainController.cliente.isAdmin()}">
+			<h:outputText
+				value="Você não possui permissão para acessar esta tela." />
+		</h:panelGroup>
+		<h:panelGroup
+			rendered="#{mainController.cliente != null and mainController.cliente.isAdmin()}">
+			<b:form inline="true">
+				<h:panelGrid columns="1">
+					<div>
+						<b:label value="Nome Completo" />
+						<b:inputText placeholder="Nome Completo"
+							value="#{clienteController.cliente.name}" />
+					</div>
+					<div>
+						<b:label value="CPF" />
+						<b:inputText placeholder="CPF"
+							value="${clienteController.cliente.cpf}" disabled="true"
+							mask="###.###.###-##" />
+					</div>
+					<div>
+						<b:label value="Endereço" />
+						<b:inputText placeholder="Endereço"
+							value="#{clienteController.cliente.endereco}" />
+					</div>
+					<div>
+						<b:label value="Data de Nascimento" />
+						<b:dateTimePicker format="DD/MM/YYYY" locale="en"
+							mask="DD/MM/YYYY" disabled="true"
+							value="${clienteController.cliente.dt_nascimento}"
+							render-label="true" />
+					</div>
+					<div>
+						<b:label value="Senha" />
+						<b:inputSecret placeholder="Senha"
+							value="#{clienteController.cliente.senha}" />
+					</div>
+					<div>
+						<b:label value="Sexo" />
+						<b:selectOneMenu value="#{clienteController.cliente.sexoId}">
+							<f:selectItems value="#{clienteController.cliente.sexos}" var="s"
+								itemLabel="${s.name}" itemValue="${s.id}" />
+						</b:selectOneMenu>
+					</div>
+					<div>
+						<b:label value="E-mail" />
+						<b:inputText placeholder="E-mail" mask="email"
+							value="#{clienteController.cliente.email}" render-label="true" />
+					</div>
+					<b:commandButton value="Salvar"
+						action="#{clienteController.cliente.update()}" />
+				</h:panelGrid>
+			</b:form>
+		</h:panelGroup>
 	</div>
 </body>
 </html>

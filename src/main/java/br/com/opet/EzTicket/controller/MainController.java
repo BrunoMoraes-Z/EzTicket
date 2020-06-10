@@ -23,7 +23,7 @@ public class MainController {
 	private Cliente cliente;
 	
 	public void load(String id, String type) {
-		if (id != null && type != null) {
+		if ((id != null && type != null) && (id.length() > 0 && type.length() > 0)) {
 			if (type.equalsIgnoreCase("client")) {
 				DriverConnection connection = Driver.getStatement("select nm_cliente, dt_nascimento, nr_cpf, endereco, nm_email, id_sexo, senha from cliente where id_cliente = ?");
 				ResultSet result = null;

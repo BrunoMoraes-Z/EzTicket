@@ -1,8 +1,10 @@
-package br.com.opet.EzTicket.database;
+package br.com.opet.EzTicket.model.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import br.com.opet.EzTicket.database.Driver;
+import br.com.opet.EzTicket.database.DriverConnection;
 import br.com.opet.EzTicket.model.Organizador;
 import br.com.opet.EzTicket.utils.Utils;
 
@@ -29,7 +31,7 @@ public class OrganizadorDao {
 		Utils.deleteSession();
 	}
 
-	public void salvar(Organizador org) {
+	public void save(Organizador org) {
 		DriverConnection connection = Driver.getStatement("insert into organizador (id_organizador, nm_organizador, endereco, cnpj, senha, nm_email) values (?, ?, ?, ?, ?, ?)");
 		PreparedStatement stm = connection.getStatement();
 		try {

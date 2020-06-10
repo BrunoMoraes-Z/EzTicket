@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 
 import br.com.opet.EzTicket.database.Driver;
 import br.com.opet.EzTicket.database.DriverConnection;
@@ -71,22 +70,9 @@ public class ClienteController {
 		}
 	}
 	
-	public String removeCliente(String id) {
-		DriverConnection connection = Driver.getStatement("delete from cliente where id_cliente=?");
-		PreparedStatement stm = connection.getStatement();
-		try {
-			stm.setString(1, id);
-			int rolls = stm.executeUpdate();
-			if (rolls != 1) {
-				connection.roolback();
-			}
-			connection.commit();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		connection.close(null);
-		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-		return "consultacliente.xhtml";
+	public String delete(String id) {
+		loadCliente(id);
+		return this.cliente.delete();
 	}
 	
 	public String editCliente(String id) {

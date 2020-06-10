@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+	<title>Editar Evento</title>
+	${eventoController.loadEvento(param['event_id'])}
+</h:head>
+<body>
+	<div id="navegation">
+		<b:button value="Voltar para Home" href="index.xhtml" />
+	</div>
+	<div id="root">
+		<h:panelGroup rendered="#{eventoController.evento.id == null}">
+			<div id="cadastro" style="display: flex; align-items: right;">
+				<b:form>
+					<h:outputText
+						value="Você deve estar logado para poder editar um Evento." />
+					<br />
+					<b:commandButton value="Efetuar Login"
+						action="loginorganizador.xhtml" />
+				</b:form>
+			</div>
+		</h:panelGroup>
+
+		<h:panelGroup rendered="#{eventoController.evento.id != null}">
+			<div id="cadastro" style="display: flex; align-items: right;">
+				<b:form>
+					<b:inputText placeholder="Nome" value="#{eventoController.evento.name}"
+						label="Nome Do Evento" />
+					<b:inputText type="number" value="#{eventoController.evento.max_pessoas}"
+						label="Quantidade de Pessoas" />
+					<b:dateTimePicker format="DD/MM/YYYY" locale="en"
+						value="#{eventoController.evento.dt_evento}" label="Data do Evento" />
+					<b:selectOneMenu value="#{eventoController.evento.id_tipo_evento}"
+						label="Tipo de Evento">
+						<f:selectItems value="${eventoController.evento.tiposEventos}" var="te"
+							itemLabel="${te.name}" itemValue="${te.id}" />
+					</b:selectOneMenu>
+					<b:selectOneMenu value="#{eventoController.evento.id_tipo_classificacao}"
+						label="Classificação Indicada">
+						<f:selectItems value="${eventoController.evento.classificacoes}" var="c"
+							itemLabel="${c.name}" itemValue="${c.id}" />
+					</b:selectOneMenu>
+					<b:commandButton value="Salvar"
+						action="${eventoController.evento.update()}" />
+				</b:form>
+			</div>
+		</h:panelGroup>
+	</div>
+</body>
+</html>

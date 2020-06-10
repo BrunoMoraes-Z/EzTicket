@@ -5,14 +5,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 import br.com.opet.EzTicket.database.Driver;
 import br.com.opet.EzTicket.database.DriverConnection;
 
 @ManagedBean
+@SessionScoped
 public class Login {
 
 	private String email, senha;
+	
+	public Login() {
+		this.email = "";
+		this.senha = "";
+	}
 	
 	public String getEmail() {
 		return email;

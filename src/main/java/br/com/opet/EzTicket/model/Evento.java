@@ -3,21 +3,25 @@ package br.com.opet.EzTicket.model;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 import br.com.opet.EzTicket.database.Driver;
 import br.com.opet.EzTicket.database.DriverConnection;
+import br.com.opet.EzTicket.model.dao.EventoDao;
 import br.com.opet.EzTicket.utils.Utils;
 
 @ManagedBean
+@SessionScoped
 public class Evento {
 
 	private String id, idOrganizador, name;
 	private Date dt_evento;
-	private int max_pessoas = 100;
+	private int max_pessoas = 100, filled_slots;
 	private int id_tipo_evento, id_tipo_classificacao;
 	private TipoEvento tipoEvento;
 	private Classificacao classificacao;
@@ -26,24 +30,17 @@ public class Evento {
 		this.id = UUID.randomUUID().toString();
 	}
 	
-	public Evento(String idOrganizador, String name, Date dt_evento, int max_pessoas, TipoEvento tipoEvento, Classificacao classificacao) {
-		this.id = UUID.randomUUID().toString();
-		this.idOrganizador = idOrganizador;
-		this.name = name;
-		this.dt_evento = dt_evento;
-		this.max_pessoas = max_pessoas;
-		this.tipoEvento = tipoEvento;
-		this.classificacao = classificacao;
-	}
-	
-	public Evento(String id, String idOrganizador, String name, Date dt_evento, int max_pessoas, TipoEvento tipoEvento, Classificacao classificacao) {
+	public Evento(String id, String idOrganizador, String name, Date dt_evento, int max_pessoas, int filled_slots, TipoEvento tipoEvento, Classificacao classificacao) {
 		this.id = id;
 		this.idOrganizador = idOrganizador;
 		this.name = name;
 		this.dt_evento = dt_evento;
 		this.max_pessoas = max_pessoas;
+		this.filled_slots = filled_slots;
 		this.tipoEvento = tipoEvento;
 		this.classificacao = classificacao;
+		this.id_tipo_classificacao = this.classificacao.getId();
+		this.id_tipo_evento = this.tipoEvento.getId();
 	}
 
 	public String getidOrganizador() {
@@ -58,6 +55,23 @@ public class Evento {
 		this.name = name;
 	}
 
+	public int getCurrent() {
+		return this.filled_slots;
+	}
+	
+	public String getSlotFormated() {
+		return this.filled_slots + "/" + this.max_pessoas;
+	}
+	
+	public void updateSlot() {
+		this.filled_slots--;
+		update();
+	}
+	
+	public boolean hasSlot() {
+		return this.filled_slots > this.max_pessoas;
+	}
+	
 	public Date getDt_evento() {
 		return dt_evento;
 	}
@@ -120,6 +134,10 @@ public class Evento {
 		this.classificacao = Classificacao.getClassificacaoById(id_tipo_classificacao);
 	}
 
+	public String getFormatedDtEvento() {
+		return new SimpleDateFormat("dd/MM/YYYY").format(this.dt_evento);
+	}
+	
 	public String getOwnerName() {
 		DriverConnection con = Driver.getStatement("select nm_organizador from organizador where id_organizador = ?");
 		PreparedStatement stm = con.getStatement();
@@ -138,34 +156,24 @@ public class Evento {
 	
 	public String salvar(String idOrganizador) {
 		this.idOrganizador = idOrganizador;
-		DriverConnection con = Driver.getStatement("insert into evento (id_evento, id_organizador, nm_evento, dt_evento, max_pessoas, id_tipo_evento, id_classificacao) values (?,?,?,?,?,?,?)");
-		PreparedStatement stm = con.getStatement();
-		try {
-			stm.setString(1, this.id);
-			stm.setString(2, this.idOrganizador);
-			stm.setString(3, this.name);
-			stm.setDate(4, new java.sql.Date(this.dt_evento.getTime()));
-			stm.setInt(5, this.max_pessoas);
-			stm.setInt(6, this.tipoEvento.getId());
-			stm.setInt(7, this.classificacao.getId());
-			int rolls = stm.executeUpdate();
-			if (rolls != 1) {
-				con.roolback();
-			}
-			con.commit();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		con.close(null);
+		new EventoDao().save(this);
 		return "index.xhtml";
 	}
 
+	public String update() {
+		new EventoDao().update(this);
+		return "consultaeventosorg.xhtml";
+	}
+	
+	public String delete() {
+		new EventoDao().delete(this);
+		return "consultaeventosorg.xhtml";
+	}
+	
 	@Override
 	public String toString() {
 		return "Evento [id=" + id + ", idOrganizador=" + idOrganizador + ", name=" + name + ", dt_evento=" + dt_evento
 				+ ", max_pessoas=" + max_pessoas + ", tipoEvento=" + tipoEvento + ", classificacao=" + classificacao + "]";
 	}
-	
-	
 	
 }

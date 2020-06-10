@@ -16,31 +16,58 @@
 	</div>
 	<br />
 	<div id="root">
-		<b:form inline="true">
-			<h:panelGrid columns="1">
-				<div>
-					<b:label value="Nome da Organização completa" />
-					<b:inputText placeholder="Nome" value="#{organizadorController.organizador.name}"  />
-				</div>
-				<div>
-					<b:label value="CNPJ" />
-					<b:inputText placeholder="CNPJ" value="${organizadorController.organizador.cnpj}" mask="##.###.###/####-##" disabled="true" />
-				</div>
-				<div>
-					<b:label value="Endereço" />
-					<b:inputText placeholder="Endereço" value="#{organizadorController.organizador.endereco}" />
-				</div>
-				<div>
-					<b:label value="Senha" />
-					<b:inputSecret placeholder="Senha" value="#{organizadorController.organizador.senha}" />
-				</div>
-				<div>
-					<b:label value="E-Mail" />
-					<b:inputText placeholder="E-mail" mask="email" value="#{organizadorController.organizador.email}" render-label="true" />
-				</div>
-				<b:commandButton value="Salvar" action="${organizadorController.organizador.update()}" />
-			</h:panelGrid>
-		</b:form>
+		<h:panelGroup rendered="#{mainController.cliente == null}">
+			<div id="cadastro" style="display: flex; align-items: right;">
+				<b:form>
+					<h:outputText
+						value="Você deve estar logado para consultar os clientes." />
+					<br />
+					<b:commandButton value="Efetuar Login" action="logincliente.xhtml" />
+				</b:form>
+			</div>
+		</h:panelGroup>
+		<h:panelGroup
+			rendered="#{mainController.cliente != null and !mainController.cliente.isAdmin()}">
+			<h:outputText
+				value="Você não possui permissão para acessar esta tela." />
+		</h:panelGroup>
+		<h:panelGroup
+			rendered="#{mainController.cliente != null and mainController.cliente.isAdmin()}">
+			<b:form inline="true">
+				<h:panelGrid columns="1">
+					<div>
+						<b:label value="Nome da Organização completa" />
+						<b:inputText placeholder="Nome"
+							value="#{organizadorController.organizador.name}" />
+					</div>
+					<div>
+						<b:label value="CNPJ" />
+						<b:inputText placeholder="CNPJ"
+							value="${organizadorController.organizador.cnpj}"
+							mask="##.###.###/####-##" disabled="true" />
+					</div>
+					<div>
+						<b:label value="Endereço" />
+						<b:inputText placeholder="Endereço"
+							value="#{organizadorController.organizador.endereco}" />
+					</div>
+					<div>
+						<b:label value="Senha" />
+						<b:inputSecret placeholder="Senha"
+							value="#{organizadorController.organizador.senha}" />
+					</div>
+					<div>
+						<b:label value="E-Mail" />
+						<b:inputText placeholder="E-mail" mask="email"
+							value="#{organizadorController.organizador.email}"
+							render-label="true" />
+					</div>
+					<b:commandButton value="Salvar"
+						action="${organizadorController.organizador.update()}" />
+				</h:panelGrid>
+			</b:form>
+		</h:panelGroup>
+
 	</div>
 </body>
 </html>

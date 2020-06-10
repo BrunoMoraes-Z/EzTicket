@@ -7,7 +7,7 @@ import java.util.UUID;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import br.com.opet.EzTicket.database.OrganizadorDao;
+import br.com.opet.EzTicket.model.dao.OrganizadorDao;
 import br.com.opet.EzTicket.utils.Utils;
 
 @ManagedBean
@@ -87,7 +87,7 @@ public class Organizador {
 	}
 
 	public String salvar() {
-		new OrganizadorDao().salvar(this);
+		new OrganizadorDao().save(this);
 		return "index.xhtml";
 	}
 	
