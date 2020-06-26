@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import javax.faces.bean.ManagedBean;
 
+import br.com.opet.EzTicket.controller.IngressoController;
 import br.com.opet.EzTicket.model.dao.ClienteDao;
 import br.com.opet.EzTicket.utils.Utils;
 
@@ -130,8 +131,12 @@ public class Cliente {
 	}
 	
 	public boolean hasEvent(Evento evento) {
-		
-		return false;
+		return evento != null ? new IngressoController().hasIngresso(this, evento) : false;
+	}
+	
+	public String removeEvent(Evento evento) {
+		new IngressoController().delete(evento.getId(), this.getId());
+		return "cconsultaeventosclient.xhtml";
 	}
 	
 	public String addEvent(Evento evento) {

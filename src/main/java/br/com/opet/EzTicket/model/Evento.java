@@ -64,12 +64,12 @@ public class Evento {
 	}
 	
 	public void updateSlot() {
-		this.filled_slots--;
+		this.filled_slots++;
 		update();
 	}
 	
 	public boolean hasSlot() {
-		return this.filled_slots > this.max_pessoas;
+		return this.filled_slots < this.max_pessoas;
 	}
 	
 	public Date getDt_evento() {

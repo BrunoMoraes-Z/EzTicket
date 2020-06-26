@@ -28,7 +28,7 @@ public class EventoController {
 	}
 	
 	public void loadEvento(String id) {
-		DriverConnection con = Driver.getStatement("Select id_organizador, nm_evento, dt_evento, max_pessoas, id_tipo_evento, id_classificacao, filled_slots from evento where id_evento = ?");
+		DriverConnection con = Driver.getStatement("Select id_organizador, nm_evento, dt_evento, max_pessoas, id_tipo_evento, id_classificacao, (select count(*) from ingresso where id_evento = evento.id_evento) as filled from evento where id_evento = ?");
 		PreparedStatement stm = con.getStatement();
 		ResultSet result = null;
 		try {
@@ -40,7 +40,7 @@ public class EventoController {
 				String nome = result.getString("nm_evento");
 				Date dt_evento = result.getDate("dt_evento");
 				int max_pessoas = result.getInt("max_pessoas");
-				int filled_slots = result.getInt("filled_slots");
+				int filled_slots = result.getInt("filled");
 				TipoEvento te = TipoEvento.getTipoEventoById(result.getInt("id_tipo_evento"));
 				Classificacao c = Classificacao.getClassificacaoById(result.getInt("id_classificacao"));
 				this.evento = new Evento(id, organizador, nome, dt_evento, max_pessoas, filled_slots, te, c);
@@ -51,11 +51,12 @@ public class EventoController {
 	
 	public List<Evento> getEventos() {
 		List<Evento> list = new ArrayList<>();
-		DriverConnection con = Driver.getStatement("Select id_evento, id_organizador, nm_evento, dt_evento, max_pessoas, id_tipo_evento, id_classificacao, filled_slots from evento where dt_evento >= ?");
+		DriverConnection con = Driver.getStatement("Select id_evento, id_organizador, nm_evento, dt_evento, max_pessoas, id_tipo_evento, id_classificacao, (select count(*) from ingresso where id_evento = evento.id_evento) as filled from evento where dt_evento >= ?");
 		PreparedStatement stm = con.getStatement();
 		ResultSet result = null;
 		try {
-			stm.setDate(1, new java.sql.Date(Utils.getDateFromString("today").getTime()));
+			Date data = Utils.getDateFromString("today");
+			stm.setDate(1, new java.sql.Date(data.getTime()));
 			result = stm.executeQuery();
 			while (result.next()) {
 				String id = result.getString("id_evento");
@@ -63,7 +64,7 @@ public class EventoController {
 				String nome = result.getString("nm_evento");
 				Date dt_evento = result.getDate("dt_evento");
 				int max_pessoas = result.getInt("max_pessoas");
-				int filled_slots = result.getInt("filled_slots");
+				int filled_slots = result.getInt("filled");
 				TipoEvento te = TipoEvento.getTipoEventoById(result.getInt("id_tipo_evento"));
 				Classificacao c = Classificacao.getClassificacaoById(result.getInt("id_classificacao"));
 				list.add(new Evento(id, id_owner, nome, dt_evento, max_pessoas, filled_slots, te, c));
@@ -77,7 +78,7 @@ public class EventoController {
 	
 	public Evento getEventoByID(String id) {
 		if (id != null && id.length() == 36) {
-			DriverConnection con = Driver.getStatement("Select id_organizador, nm_evento, dt_evento, max_pessoas, id_tipo_evento, id_classificacao, filled_slots from evento where id_evento = ?");
+			DriverConnection con = Driver.getStatement("Select id_organizador, nm_evento, dt_evento, max_pessoas, id_tipo_evento, id_classificacao, (select count(*) from ingresso where id_evento = evento.id_evento) as filled from evento where id_evento = ?");
 			PreparedStatement stm = con.getStatement();
 			ResultSet result = null;
 			try {
@@ -89,7 +90,7 @@ public class EventoController {
 					String nome = result.getString("nm_evento");
 					Date dt_evento = result.getDate("dt_evento");
 					int max_pessoas = result.getInt("max_pessoas");
-					int filled_slots = result.getInt("filled_slots");
+					int filled_slots = result.getInt("filled");
 					TipoEvento te = TipoEvento.getTipoEventoById(result.getInt("id_tipo_evento"));
 					Classificacao c = Classificacao.getClassificacaoById(result.getInt("id_classificacao"));
 					return new Evento(id, organizador, nome, dt_evento, max_pessoas, filled_slots, te, c);
@@ -105,7 +106,7 @@ public class EventoController {
 	public List<Evento> getEventosFromOwner(String id_owner) {
 		if (id_owner != null && id_owner.length() == 36) {
 			List<Evento> list = new ArrayList<>();
-			DriverConnection con = Driver.getStatement("Select id_evento, nm_evento, dt_evento, max_pessoas, id_tipo_evento, id_classificacao, filled_slots from evento where id_organizador = ?");
+			DriverConnection con = Driver.getStatement("Select id_evento, nm_evento, dt_evento, max_pessoas, id_tipo_evento, id_classificacao, (select count(*) from ingresso where id_evento = evento.id_evento) as filled from evento where id_organizador = ?");
 			PreparedStatement stm = con.getStatement();
 			ResultSet result = null;
 			try {
@@ -117,7 +118,7 @@ public class EventoController {
 					String nome = result.getString("nm_evento");
 					Date dt_evento = result.getDate("dt_evento");
 					int max_pessoas = result.getInt("max_pessoas");
-					int filled_slots = result.getInt("filled_slots");
+					int filled_slots = result.getInt("filled");
 					TipoEvento te = TipoEvento.getTipoEventoById(result.getInt("id_tipo_evento"));
 					Classificacao c = Classificacao.getClassificacaoById(result.getInt("id_classificacao"));
 					list.add(new Evento(id, id_owner, nome, dt_evento, max_pessoas, filled_slots, te, c));

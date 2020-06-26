@@ -13,6 +13,7 @@ import javax.faces.bean.SessionScoped;
 import br.com.opet.EzTicket.database.Driver;
 import br.com.opet.EzTicket.database.DriverConnection;
 import br.com.opet.EzTicket.model.Cliente;
+import br.com.opet.EzTicket.model.Ingresso;
 import br.com.opet.EzTicket.model.Sexo;
 
 @ManagedBean
@@ -68,6 +69,29 @@ public class ClienteController {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public List<Ingresso> getIngressosFromCliente(Cliente cliente) {
+		List<Ingresso> list = new ArrayList<Ingresso>();
+		DriverConnection connection = Driver.getStatement("select id_ingresso, slot, id_evento from ingresso where id_cliente = ?");
+		ResultSet result = null;
+		try {
+			PreparedStatement stm = connection.getStatement();
+			stm.setString(1, cliente.getId());
+			result = stm.executeQuery();
+			while(result.next()) {
+				String id_ingresso = result.getString("id_ingresso");
+				String id_evento = result.getString("id_evento");
+				EventoController con = new EventoController();
+				con.loadEvento(id_evento);
+				int slot = result.getInt("slot");
+				list.add(new Ingresso(id_ingresso, slot, con.getEvento(), cliente));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		connection.close(result);
+		return list;
 	}
 	
 	public String delete(String id) {

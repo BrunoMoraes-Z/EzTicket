@@ -17,10 +17,10 @@ import br.com.opet.EzTicket.utils.restful.RestAPI;
 public class Main {
 
     public static void main(String[] args) {
-    	geradorCliente(1000);
-    	geradorOrganizador(60);
+    	geradorCliente(3000);
+//    	geradorOrganizador(60);
     }
-
+    
     private static void geradorOrganizador(int amount) {
     	JSONObject pessoa;
     	for (int i = 0; i < amount; i++) {

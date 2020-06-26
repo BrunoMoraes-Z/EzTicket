@@ -28,7 +28,7 @@ public class OrganizadorDao {
 			e.printStackTrace();
 		}
 		connection.close(null);
-		Utils.deleteSession();
+//		Utils.deleteSession();
 	}
 
 	public void save(Organizador org) {
@@ -68,7 +68,7 @@ public class OrganizadorDao {
 			e.printStackTrace();
 		}
 		connection.close(null);
-		Utils.deleteSession();
+//		Utils.deleteSession();
 	}
 	
 }

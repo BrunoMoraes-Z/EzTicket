@@ -1,6 +1,10 @@
 package br.com.opet.EzTicket.model;
 
+import java.util.UUID;
+
 import javax.faces.bean.ManagedBean;
+
+import br.com.opet.EzTicket.model.dao.IngressoDao;
 
 @ManagedBean
 public class Ingresso {
@@ -9,6 +13,10 @@ public class Ingresso {
 	private int slot;
 	private Evento evento;
 	private Cliente cliente;
+	
+	public Ingresso() {
+		this.id = UUID.randomUUID().toString();
+	}
 	
 	public Ingresso(String id, int slot, Evento evento, Cliente cliente) {
 		this.id = id;
@@ -46,7 +54,7 @@ public class Ingresso {
 	}
 	
 	public void save() {
-		
+		new IngressoDao().save(this);
 	}
 	
 }

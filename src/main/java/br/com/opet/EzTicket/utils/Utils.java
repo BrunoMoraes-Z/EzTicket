@@ -9,12 +9,11 @@ import javax.swing.text.MaskFormatter;
 
 public class Utils {
 
-	@SuppressWarnings("deprecation")
 	public static Date getDateFromString(String input) {
 		try {
 			if (input != null && input.equalsIgnoreCase("today")) {
 				Date date = new Date();
-				input = date.getDay() + "/" + date.getMonth() + "/" + date.getYear();
+				input = new SimpleDateFormat("dd/MM/yyyy").format(date);
 			}
 			return new SimpleDateFormat("dd/MM/yyyy").parse(input);
 		} catch (Exception e) {}

@@ -23,16 +23,29 @@
 			<b:form inline="true">
 				<b:dataTable value="${eventoController.getEventos()}" var="evento">
 					<b:dataTableColumn value="${evento.name}" label="Nome 📄" />
-					<b:dataTableColumn value="${evento.getOwnerName()}" label="Organizador 📄" />
-					<b:dataTableColumn value="${evento.getFormatedDtEvento()}" label="Data do Evento 📅" />
-					<b:dataTableColumn value="${evento.max_pessoas} Pessoas" label="Capacidade 🎟" />
-					<b:dataTableColumn value="${evento.classificacao.name}" 
+					<b:dataTableColumn value="${evento.getOwnerName()}"
+						label="Organizador 📄" />
+					<b:dataTableColumn value="${evento.getFormatedDtEvento()}"
+						label="Data do Evento 📅" />
+					<b:dataTableColumn value="${evento.max_pessoas} Pessoas"
+						label="Capacidade 🎟" />
+					<b:dataTableColumn value="${evento.classificacao.name}"
 						label="Classificação 📋" />
 					<b:dataTableColumn value="${evento.tipoEvento.name}"
 						label="Tipo de Evento 📋" />
 					<b:dataTableColumn label="Opções 📝">
-						<b:commandButton tooltip="Inscrever-Se" value="💲" action="${mainController.cliente.addEvent(evento.id)}" />
+						<h:panelGroup
+							rendered="#{mainController.cliente.hasEvent(evento)}">
+							<b:commandButton tooltip="Cancelar" value="❌"
+									action="${mainController.cliente.removeEvent(evento)}" />
+						</h:panelGroup>
+						<h:panelGroup
+							rendered="#{!mainController.cliente.hasEvent(evento)}">
+							<b:commandButton tooltip="Inscrever-Se" value="💲"
+									action="${mainController.cliente.addEvent(evento)}" />
+						</h:panelGroup>
 					</b:dataTableColumn>
+
 				</b:dataTable>
 			</b:form>
 		</h:panelGroup>
@@ -40,7 +53,7 @@
 			<b:form inline="true">
 				<h:outputText
 					value="Voce deve estar logado para visualizar os eventos..." />
-					<br />
+				<br />
 				<b:commandButton value="Efetuar Login" action="logincliente.xhtml" />
 			</b:form>
 		</h:panelGroup>

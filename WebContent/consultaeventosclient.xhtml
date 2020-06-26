@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+	<title>Seus Eventos</title>
+</h:head>
+<body>
+	<div id="navegation">
+		<b:button value="Voltar para Home" href="index.xhtml" />
+	</div>
+	<br />
+	<div id="title">
+		<h:outputText value="Seus eventos." />
+	</div>
+	<br />
+	<div id="root">
+		<h:panelGroup rendered="#{mainController.cliente != null}">
+			<b:form inline="true">
+				<b:dataTable
+					value="${clienteController.getIngressosFromCliente(mainController.cliente)}"
+					var="ticket">
+					<b:dataTableColumn value="#{ticket.evento.name}" label="Nome 📄" />
+					<b:dataTableColumn value="#{ticket.evento.getFormatedDtEvento()}"
+						label="Data do Evento 📅" />
+					<b:dataTableColumn value="#{ticket.slot}" />
+					<b:dataTableColumn value="${ticket.evento.classificacao.name}"
+						label="Classificação 📋" />
+					<b:dataTableColumn value="${ticket.evento.tipoEvento.name}"
+						label="Tipo de Evento 📋" />
+					<b:dataTableColumn label="Opções 📝">
+							<b:commandButton tooltip="Cancelar" value="❌"
+								action="${mainController.cliente.removeEvent(ticket.evento)}" />
+						</b:dataTableColumn>
+				</b:dataTable>
+			</b:form>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{mainController.cliente == null}">
+			<b:form inline="true">
+				<h:outputText
+					value="Voce deve estar logado para visualizar seus eventos..." />
+				<br />
+				<b:commandButton value="Efetuar Login" action="logincliente.xhtml" />
+			</b:form>
+		</h:panelGroup>
+	</div>
+</body>
+</html>

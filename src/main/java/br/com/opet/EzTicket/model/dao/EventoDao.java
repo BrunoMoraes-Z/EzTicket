@@ -10,7 +10,7 @@ import br.com.opet.EzTicket.model.Evento;
 public class EventoDao {
 
 	public void update(Evento evento) {
-		DriverConnection con = Driver.getStatement("update evento set nm_evento = ?, dt_evento = ?, max_pessoas = ?, id_tipo_evento = ?, id_classificacao = ?, filled_slots = ? where id_evento = ? and id_organizador = ?");
+		DriverConnection con = Driver.getStatement("update evento set nm_evento = ?, dt_evento = ?, max_pessoas = ?, id_tipo_evento = ?, id_classificacao = ? where id_evento = ? and id_organizador = ?");
 		PreparedStatement stm = con.getStatement();
 		try {
 			stm.setString(1, evento.getName());
@@ -18,9 +18,8 @@ public class EventoDao {
 			stm.setInt(3, evento.getMax_pessoas());
 			stm.setInt(4, evento.getTipoEvento().getId());
 			stm.setInt(5, evento.getClassificacao().getId());
-			stm.setInt(6, evento.getCurrent());
-			stm.setString(7, evento.getId());
-			stm.setString(8, evento.getidOrganizador());
+			stm.setString(6, evento.getId());
+			stm.setString(7, evento.getidOrganizador());
 			int rolls = stm.executeUpdate();
 			if (rolls != 1) {
 				con.roolback();
@@ -33,7 +32,7 @@ public class EventoDao {
 	}
 	
 	public void save(Evento evento) {
-		DriverConnection con = Driver.getStatement("insert into evento (id_evento, id_organizador, nm_evento, dt_evento, max_pessoas, id_tipo_evento, id_classificacao, filled_slots) values (?,?,?,?,?,?,?,?)");
+		DriverConnection con = Driver.getStatement("insert into evento (id_evento, id_organizador, nm_evento, dt_evento, max_pessoas, id_tipo_evento, id_classificacao) values (?,?,?,?,?,?,?,)");
 		PreparedStatement stm = con.getStatement();
 		try {
 			stm.setString(1, evento.getId());
@@ -43,7 +42,6 @@ public class EventoDao {
 			stm.setInt(5, evento.getMax_pessoas());
 			stm.setInt(6, evento.getTipoEvento().getId());
 			stm.setInt(7, evento.getClassificacao().getId());
-			stm.setInt(8, evento.getCurrent());
 			int rolls = stm.executeUpdate();
 			if (rolls != 1) {
 				con.roolback();

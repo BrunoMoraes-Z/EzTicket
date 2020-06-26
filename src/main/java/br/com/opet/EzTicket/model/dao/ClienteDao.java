@@ -3,12 +3,9 @@ package br.com.opet.EzTicket.model.dao;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import javax.faces.context.FacesContext;
-
 import br.com.opet.EzTicket.database.Driver;
 import br.com.opet.EzTicket.database.DriverConnection;
 import br.com.opet.EzTicket.model.Cliente;
-import br.com.opet.EzTicket.utils.Utils;
 
 public class ClienteDao {
 
@@ -70,8 +67,8 @@ public class ClienteDao {
 			e.printStackTrace();
 		}
 		connection.close(null);
-		Utils.deleteSession();
-		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+//		Utils.deleteSession();
+//		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 	}
 	
 }
