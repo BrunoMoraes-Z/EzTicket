@@ -10,17 +10,16 @@
 	<title>EzTicket</title>
 	${mainController.load(param['client_id'] != null ? param['client_id'] : param['org_id'] != null ? param['org_id'] : null, param['type'] != null ? param['type'] : null)}
 </h:head>
-<body>
-	<div style="display: flex; align-items: center;">
+<body style="margin-top: 120px;">
+	<div style="display: flex; align-items: center; justify-content: center;">
 		<h:panelGroup
 			rendered="#{mainController.cliente == null and mainController.organizador == null}">
 			<div id="cadastro">
 				<b:form inline="true">
 					<h:panelGrid columns="1">
-						<b:label value="Cadastro" />
+						<b:label value="Cadastro" style="display: flex; align-items: center; justify-content: center;" />
+						<b:commandButton value="Organizador" action="cadastroorganizador.xhtml" />
 						<b:commandButton value="Cliente" action="cadastrocliente.xhtml " />
-						<b:commandButton value="Organizador"
-							action="cadastroorganizador.xhtml" />
 					</h:panelGrid>
 				</b:form>
 			</div>
@@ -31,39 +30,37 @@
 			<div id="consulta" style="">
 				<b:form inline="true">
 					<h:panelGrid columns="1">
-						<b:label value="Consulta" />
+						<b:label value="Consulta" style="display: flex; align-items: center; justify-content: center;"/>
+						<b:commandButton value="Organizador" action="consultaorganizador.xhtml " />
 						<b:commandButton value="Cliente" action="consultacliente.xhtml " />
-						<b:commandButton value="Organizador"
-							action="consultaorganizador.xhtml " />
 					</h:panelGrid>
 				</b:form>
 			</div>
 		</h:panelGroup>
 	</div>
-	<div>
+	<div
+		style="display: flex; align-items: center; justify-content: center;">
 		<h:panelGroup
 			rendered="#{mainController.cliente == null and mainController.organizador == null}">
 			<div id="login" style="display: flex; align-items: right;">
 				<b:form inline="true">
 					<h:panelGrid columns="1">
-						<b:label value="Login" />
-						<b:commandButton value="Login - Cliente"
-							action="logincliente.xhtml " />
-						<b:commandButton value="Login - Organizador"
-							action="loginorganizador.xhtml " />
+						<b:label value="Login" style="display: flex; align-items: center; justify-content: center;"/>
+						<b:commandButton value="Login - Organizador" action="loginorganizador.xhtml " />
+						<b:commandButton value="Login - Cliente" action="logincliente.xhtml " />
 					</h:panelGrid>
 				</b:form>
 			</div>
 		</h:panelGroup>
 
-		<div>
+		<div
+			style="display: flex; align-items: center; justify-content: center;">
 			<h:panelGroup rendered="#{mainController.cliente != null}">
 				<div id="organizador" style="display: flex; align-items: center;">
 					<b:form inline="true">
 						<h:panelGrid columns="1">
-							<b:label value="Eventos" />
-							<b:commandButton value="Todos os Eventos"
-								action="consultaeventos.xhtml " />
+							<b:label value="Eventos" style="display: flex; align-items: center; justify-content: center;" />
+							<b:commandButton value="Todos os Eventos" action="consultaeventos.xhtml " />
 							<b:commandButton value="Meus Eventos" action="consultaeventosclient.xhtml" />
 						</h:panelGrid>
 					</b:form>
@@ -74,30 +71,28 @@
 				<div id="organizador" style="display: flex; align-items: center;">
 					<b:form inline="true">
 						<h:panelGrid columns="1">
-							<b:label value="Eventos" />
-							<b:commandButton value="Novo Evento"
-								action="cadastroevento.xhtml " />
-							<b:commandButton value="Eventos"
-								action="consultaeventosorg.xhtml" />
+							<b:label value="Eventos" style="display: flex; align-items: center; justify-content: center;"/>
+							<b:commandButton value="Novo Evento" action="cadastroevento.xhtml " />
+							<b:commandButton value="Eventos" action="consultaeventosorg.xhtml" />
 						</h:panelGrid>
 					</b:form>
 				</div>
 			</h:panelGroup>
 		</div>
 
+	</div>
+	<div style="display: flex; align-items: center; justify-content: center;">
 		<h:panelGroup
 			rendered="#{mainController.cliente != null or mainController.organizador != null}">
 			<div id="logout" style="display: flex; align-items: right;">
 				<b:form inline="true">
 					<h:panelGrid columns="1">
-						<b:label value="Login" />
-						<b:commandButton value="Logout"
-							action="${mainController.logout()}" />
+						<b:label value="Login" style="display: flex; align-items: center; justify-content: center;" />
+						<b:commandButton value="Logout" action="${mainController.logout()}" />
 					</h:panelGrid>
 				</b:form>
 			</div>
 		</h:panelGroup>
-
 	</div>
 </body>
 </html>

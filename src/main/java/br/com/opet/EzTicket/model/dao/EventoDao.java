@@ -32,7 +32,7 @@ public class EventoDao {
 	}
 	
 	public void save(Evento evento) {
-		DriverConnection con = Driver.getStatement("insert into evento (id_evento, id_organizador, nm_evento, dt_evento, max_pessoas, id_tipo_evento, id_classificacao) values (?,?,?,?,?,?,?,)");
+		DriverConnection con = Driver.getStatement("insert into evento (id_evento, id_organizador, nm_evento, dt_evento, max_pessoas, id_tipo_evento, id_classificacao) values (?,?,?,?,?,?,?)");
 		PreparedStatement stm = con.getStatement();
 		try {
 			stm.setString(1, evento.getId());
